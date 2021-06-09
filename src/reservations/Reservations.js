@@ -5,6 +5,7 @@ import { CalendarEvent } from "../interfaces/calendarevent";
 
 import { Link } from "react-router-dom";
 import RevoCalendar from 'revo-calendar';
+import Container from './components/container';
 
 
 const Reservations = () => {
@@ -28,7 +29,7 @@ const Reservations = () => {
                         daysArray.forEach(element => {
                             parsedData.push(
                                 {
-                                    name: r.dog,
+                                    name: r.dog_name,
                                     allDay: true,
                                     date: element
                                 }
@@ -43,16 +44,19 @@ const Reservations = () => {
         )();
     }, []);
 
-    return <RevoCalendar
-        events={reservations}
-        style={{
-            height: '35em'
-        }}
-        primaryColor="rgba(254,221,17,0.32)"
-        secondaryColor="#fff"
-        todayColor="rgba(255,155,17,0.32)"
-        sidebarDefault={false}
-        allowDeleteEvent={false}
-    />
+    return <div>
+        <Container triggerText="Open" />
+        <RevoCalendar
+            events={reservations}
+            style={{
+                height: '35em'
+            }}
+            primaryColor="rgba(254,221,17,0.32)"
+            secondaryColor="#fff"
+            todayColor="rgba(255,155,17,0.32)"
+            sidebarDefault={false}
+            allowDeleteEvent={false}
+        />
+    </div>
 }
 export default Reservations;
