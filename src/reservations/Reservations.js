@@ -25,21 +25,21 @@ const Reservations = () => {
 
     const handleClose = (value) => {
         setFormVisible(false);
+        (async () => fetchData())();
     };
     const handleDate = (params) => {
-        console.log("handled date", params)
         // TODO: There is this weird bug with month? +1 required
-        setSelectedDate(`${params.month + 1}/${params.day}/${params.year}`)
+        setSelectedDate(`${params.month + 1}/${params.day}/${params.year}`);
+        (async () => fetchData())();
     }
 
-
-    useEffect(() => {
-        (
-            async () => {
-                const response = await fetch('http://localhost:8000/api/dog-reservations');
-
-                const data = await response.json();
-                let parsedData = [];
+    const fetchData = async () => {
+        await fetch('http://localhost:8000/api/dog-reservations')
+            .then(response => {
+                return response.json();
+            })
+            .then((data) => {
+                var parsedData = [];
                 data.map(
                     (r) => {
                         var daysArray = getDaysArray(new Date(r.start_date), new Date(r.end_date));
@@ -55,11 +55,13 @@ const Reservations = () => {
                         });
                     }
                 )
-                console.log(parsedData);
 
                 setReservations(parsedData);
-            }
-        )();
+            });
+    }
+
+    useEffect(() => {
+        (async () => fetchData())();
     }, []);
 
     return <div>

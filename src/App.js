@@ -13,7 +13,7 @@ function App() {
             <ul className="navbar-nav me-auto"></ul>
             <span className="navbar-text actions">
               <a className="btn btn-light action-button" style={{ background: "var(--bs-red)" }} role="button" href="#" >Fill With Test Data</a>
-              <a className="btn btn-light action-button" role="button" href="#" >Admin</a></span>
+              <a className="btn btn-light action-button" role="button" href="http://localhost:8000/admin" >Admin</a></span>
           </div>
         </div>
       </nav>

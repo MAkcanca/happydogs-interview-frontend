@@ -7,6 +7,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 import Dialog from '@material-ui/core/Dialog';
 import TextField from '@material-ui/core/TextField';
@@ -17,13 +19,18 @@ import {
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 function SimpleDialog(props) {
     const { onClose, selectedValue, open } = props;
     const [first, setFirst] = useState()
     const [last, setLast] = useState()
-    const [selectedStartDate, setSelectedStartDate] = useState()
-    const [selectedEndDate, setSelectedEndDate] = useState()
+    const [selectedStartDate, setSelectedStartDate] = useState(new Date())
+    const [selectedEndDate, setSelectedEndDate] = useState(new Date())
+    const [showError, setShowError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("Error")
 
     useEffect(() => {
         if (selectedValue) {
@@ -35,7 +42,26 @@ function SimpleDialog(props) {
         onClose(selectedValue);
     };
 
+    const handleErrorClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setShowError(false);
+    };
+
     const handleSubmit = async (params) => {
+        var currDate = new Date().setHours(0, 0, 0, 0)
+        if (selectedStartDate > selectedEndDate) {
+            setErrorMessage("Please choose the start and end date accordingly")
+            setShowError(true);
+            return;
+        }
+        if (selectedStartDate < currDate) {
+            setErrorMessage("Please choose the start and end date accordingly")
+            setShowError(true);
+            return;
+        }
         const responseDog = await fetch('http://localhost:8000/api/dogs/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -56,6 +82,7 @@ function SimpleDialog(props) {
             });
         });
 
+        handleClose();
     }
 
 
@@ -68,6 +95,11 @@ function SimpleDialog(props) {
 
     return (
         <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+            <Snackbar open={showError} autoHideDuration={6000} onClose={handleErrorClose}>
+                <Alert onClose={handleErrorClose} severity="error">
+                    {errorMessage}
+                </Alert>
+            </Snackbar>
             <DialogTitle id="simple-dialog-title">Make an appointment</DialogTitle>
             <DialogContent>
                 <DialogContentText>
