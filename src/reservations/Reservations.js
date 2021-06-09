@@ -15,6 +15,7 @@ const Reservations = () => {
     const [reservations, setReservations] = useState([]);
     const [formVisible, setFormVisible] = useState(true)
     const [selectedDate, setSelectedDate] = useState()
+
     // Returns days between s and e as array
     var getDaysArray = function (s, e) { for (var a = [], d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) { a.push(new Date(d)); } return a; };
 
@@ -27,6 +28,7 @@ const Reservations = () => {
     };
     const handleDate = (params) => {
         console.log("handled date", params)
+        // TODO: There is this weird bug with month? +1 required
         setSelectedDate(`${params.month + 1}/${params.day}/${params.year}`)
     }
 

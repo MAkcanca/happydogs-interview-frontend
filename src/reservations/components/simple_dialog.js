@@ -20,17 +20,45 @@ import {
 
 function SimpleDialog(props) {
     const { onClose, selectedValue, open } = props;
+    const [first, setFirst] = useState()
+    const [last, setLast] = useState()
     const [selectedStartDate, setSelectedStartDate] = useState()
     const [selectedEndDate, setSelectedEndDate] = useState()
 
     useEffect(() => {
         if (selectedValue) {
-            setSelectedStartDate(selectedValue)
+            setSelectedStartDate(new Date(selectedValue))
         }
     }, [selectedValue])
+
     const handleClose = () => {
         onClose(selectedValue);
     };
+
+    const handleSubmit = async (params) => {
+        const responseDog = await fetch('http://localhost:8000/api/dogs/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                first_name: first,
+                last_name: last
+            })
+        });
+        responseDog.json().then(async (data) => {
+            await fetch('http://localhost:8000/api/dog-reservations', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    start_date: selectedStartDate.toISOString().slice(0, 10),
+                    end_date: selectedEndDate.toISOString().slice(0, 10),
+                    dog: data.id
+                })
+            });
+        });
+
+    }
+
+
     const handleStartDateChange = (date) => {
         setSelectedStartDate(date);
     };
@@ -78,25 +106,26 @@ function SimpleDialog(props) {
                 <TextField
                     autoFocus
                     margin="dense"
-                    id="name"
+                    id="first_name"
                     label="First name"
                     type="text"
                     fullWidth
+                    onChange={e => setFirst(e.target.value)}
                 />
                 <TextField
-                    autoFocus
                     margin="dense"
-                    id="name"
+                    id="last_name"
                     label="Last name"
                     type="text"
                     fullWidth
+                    onChange={e => setLast(e.target.value)}
                 />
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose} color="secondary">
                     Cancel
                 </Button>
-                <Button onClick={handleClose} color="primary">
+                <Button onClick={handleSubmit} color="primary">
                     Complete
                 </Button>
             </DialogActions>

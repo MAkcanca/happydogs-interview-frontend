@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import Reservations from './reservations/Reservations'
 import './App.css';
 
@@ -7,7 +6,7 @@ function App() {
     <div>
       <nav className="navbar navbar-light navbar-expand-md navigation-clean-button">
         <div className="container">
-          <img src="./logo_dogs.png" /><button data-bs-toggle="collapse" className="navbar-toggler" data-bs-target="#navcol-1" >
+          <img alt="HappyDogs Logo" src="./logo_dogs.png" /><button data-bs-toggle="collapse" className="navbar-toggler" data-bs-target="#navcol-1" >
             <span className="visually-hidden">Toggle navigation</span>
             <span className="navbar-toggler-icon"></span></button>
           <div className="collapse navbar-collapse" id="navcol-1">
