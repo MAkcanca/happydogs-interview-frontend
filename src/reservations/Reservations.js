@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 import { DogReservation } from "../interfaces/dogreservation";
 import { CalendarEvent } from "../interfaces/calendarevent";
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+
 
 import { Link } from "react-router-dom";
 import RevoCalendar from 'revo-calendar';
@@ -11,6 +14,7 @@ import SimpleDialog from './components/simple_dialog';
 const Reservations = () => {
     const [reservations, setReservations] = useState([]);
     const [formVisible, setFormVisible] = useState(true)
+    const [selectedDate, setSelectedDate] = useState()
     // Returns days between s and e as array
     var getDaysArray = function (s, e) { for (var a = [], d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) { a.push(new Date(d)); } return a; };
 
@@ -21,6 +25,11 @@ const Reservations = () => {
     const handleClose = (value) => {
         setFormVisible(false);
     };
+    const handleDate = (params) => {
+        console.log("handled date", params)
+        setSelectedDate(`${params.month + 1}/${params.day}/${params.year}`)
+    }
+
 
     useEffect(() => {
         (
@@ -52,7 +61,12 @@ const Reservations = () => {
     }, []);
 
     return <div>
-        <SimpleDialog open={formVisible} onClose={handleClose} />
+        <SimpleDialog open={formVisible} onClose={handleClose} selectedValue={selectedDate} />
+        <Box component="span">
+            <Button variant="contained" style={{ float: 'right', marginBottom: "10px" }} onClick={addEvent} color="primary">
+                Make boarding
+        </Button>
+        </Box>
         <RevoCalendar
             events={reservations}
             style={{
@@ -64,7 +78,9 @@ const Reservations = () => {
             sidebarDefault={false}
             allowDeleteEvent={false}
             addEvent={addEvent}
+            dateSelected={handleDate}
+            detailDateFormat={'MM/DD/YYYY'}
         />
-    </div>
+    </div >
 }
 export default Reservations;

@@ -23,6 +23,11 @@ function SimpleDialog(props) {
     const [selectedStartDate, setSelectedStartDate] = useState()
     const [selectedEndDate, setSelectedEndDate] = useState()
 
+    useEffect(() => {
+        if (selectedValue) {
+            setSelectedStartDate(selectedValue)
+        }
+    }, [selectedValue])
     const handleClose = () => {
         onClose(selectedValue);
     };
@@ -90,10 +95,10 @@ function SimpleDialog(props) {
             <DialogActions>
                 <Button onClick={handleClose} color="secondary">
                     Cancel
-            </Button>
+                </Button>
                 <Button onClick={handleClose} color="primary">
                     Complete
-            </Button>
+                </Button>
             </DialogActions>
         </Dialog>
     );
