@@ -3,21 +3,27 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <nav className="navbar navbar-light navbar-expand-md navigation-clean-button">
+        <div className="container">
+          <img src="./logo_dogs.png" /><button data-bs-toggle="collapse" className="navbar-toggler" data-bs-target="#navcol-1" >
+            <span className="visually-hidden">Toggle navigation</span>
+            <span className="navbar-toggler-icon"></span></button>
+          <div className="collapse navbar-collapse" id="navcol-1">
+            <ul className="navbar-nav me-auto"></ul>
+            <span className="navbar-text actions">
+              <a className="btn btn-light action-button" style={{ background: "var(--bs-red)" }} role="button" href="#" >Fill With Test Data</a>
+              <a className="btn btn-light action-button" role="button" href="#" >Admin</a></span>
+          </div>
+        </div>
+      </nav>
+      <div className="container">
+        <div className="row">
+          <div className="col">
+            <p>Paragraph</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
