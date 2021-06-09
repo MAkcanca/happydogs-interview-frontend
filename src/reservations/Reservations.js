@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import { DogReservation } from "../interfaces/dogreservation";
+import { CalendarEvent } from "../interfaces/calendarevent";
+
 import { Link } from "react-router-dom";
 import RevoCalendar from 'revo-calendar';
 
@@ -20,8 +22,10 @@ const Reservations = () => {
                 const data = await response.json();
                 let parsedData = [];
                 data.map(
-                    (r: DogReservation) => {
-                        getDaysArray(r.start_date, r.end_date).forEach(element => {
+                    (r) => {
+                        var daysArray = getDaysArray(new Date(r.start_date), new Date(r.end_date));
+                        console.log(daysArray)
+                        daysArray.forEach(element => {
                             parsedData.push(
                                 {
                                     name: r.dog,
@@ -32,6 +36,8 @@ const Reservations = () => {
                         });
                     }
                 )
+                console.log(parsedData);
+
                 setReservations(parsedData);
             }
         )();
@@ -49,3 +55,4 @@ const Reservations = () => {
         allowDeleteEvent={false}
     />
 }
+export default Reservations;

@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import RevoCalendar from 'revo-calendar'
+import Reservations from './reservations/Reservations'
 import './App.css';
 
 function App() {
@@ -21,16 +21,7 @@ function App() {
       <div className="container">
         <div className="row">
           <div className="col">
-            <RevoCalendar
-              style={{
-                height: '35em'
-              }}
-              primaryColor="rgba(254,221,17,0.32)"
-              secondaryColor="#fff"
-              todayColor="rgba(255,155,17,0.32)"
-              sidebarDefault={false}
-              allowDeleteEvent={false}
-            />
+            <Reservations />
           </div>
         </div>
       </div>
