@@ -5,15 +5,22 @@ import { CalendarEvent } from "../interfaces/calendarevent";
 
 import { Link } from "react-router-dom";
 import RevoCalendar from 'revo-calendar';
-import Container from './components/container';
+import SimpleDialog from './components/simple_dialog';
 
 
 const Reservations = () => {
     const [reservations, setReservations] = useState([]);
-
+    const [formVisible, setFormVisible] = useState(true)
     // Returns days between s and e as array
     var getDaysArray = function (s, e) { for (var a = [], d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) { a.push(new Date(d)); } return a; };
 
+    const addEvent = (params) => {
+        setFormVisible(true)
+    }
+
+    const handleClose = (value) => {
+        setFormVisible(false);
+    };
 
     useEffect(() => {
         (
@@ -45,7 +52,7 @@ const Reservations = () => {
     }, []);
 
     return <div>
-        <Container triggerText="Open" />
+        <SimpleDialog open={formVisible} onClose={handleClose} />
         <RevoCalendar
             events={reservations}
             style={{
@@ -56,6 +63,7 @@ const Reservations = () => {
             todayColor="rgba(255,155,17,0.32)"
             sidebarDefault={false}
             allowDeleteEvent={false}
+            addEvent={addEvent}
         />
     </div>
 }
