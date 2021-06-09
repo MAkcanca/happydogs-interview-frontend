@@ -2,6 +2,13 @@ import Reservations from './reservations/Reservations'
 import './App.css';
 
 function App() {
+  const fillTest = async (params) => {
+    await fetch('http://localhost:8000/api/test-data/')
+      .then(response => {
+        window.location.reload();
+      })
+  }
+
   return (
     <div>
       <nav className="navbar navbar-light navbar-expand-md navigation-clean-button">
@@ -12,7 +19,7 @@ function App() {
           <div className="collapse navbar-collapse" id="navcol-1">
             <ul className="navbar-nav me-auto"></ul>
             <span className="navbar-text actions">
-              <a className="btn btn-light action-button" style={{ background: "var(--bs-red)" }} role="button" href="#" >Fill With Test Data</a>
+              <a className="btn btn-light action-button" style={{ background: "var(--bs-red)" }} role="button" onClick={fillTest}>Fill With Test Data</a>
               <a className="btn btn-light action-button" role="button" href="http://localhost:8000/admin" >Admin</a></span>
           </div>
         </div>

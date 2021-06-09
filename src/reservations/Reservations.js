@@ -13,7 +13,7 @@ import SimpleDialog from './components/simple_dialog';
 
 const Reservations = () => {
     const [reservations, setReservations] = useState([]);
-    const [formVisible, setFormVisible] = useState(true)
+    const [formVisible, setFormVisible] = useState(false)
     const [selectedDate, setSelectedDate] = useState()
 
     // Returns days between s and e as array
