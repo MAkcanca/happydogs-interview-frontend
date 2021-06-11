@@ -29,6 +29,7 @@ const Reservations = () => {
     };
     const handleDate = (params) => {
         // TODO: There is this weird bug with month? +1 required
+        console.log(selectedDate);
         setSelectedDate(`${params.month + 1}/${params.day}/${params.year}`);
         (async () => fetchData())();
     }
@@ -69,7 +70,7 @@ const Reservations = () => {
         <Box component="span">
             <Button variant="contained" style={{ float: 'right', marginBottom: "10px" }} onClick={addEvent} color="primary">
                 Make boarding
-        </Button>
+            </Button>
         </Box>
         <RevoCalendar
             events={reservations}

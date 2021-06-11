@@ -35,6 +35,7 @@ function SimpleDialog(props) {
     useEffect(() => {
         if (selectedValue) {
             setSelectedStartDate(new Date(selectedValue))
+            console.log(selectedStartDate);
         }
     }, [selectedValue])
 
@@ -52,6 +53,7 @@ function SimpleDialog(props) {
 
     const handleSubmit = async (params) => {
         var currDate = new Date().setHours(0, 0, 0, 0)
+        var modifiedStartDate = `${selectedStartDate.getMonth() + 1}/${selectedStartDate.getDate()}/${selectedStartDate.getFullYear()}`
         if (selectedStartDate > selectedEndDate) {
             setErrorMessage("Please choose the start and end date accordingly")
             setShowError(true);
@@ -71,12 +73,13 @@ function SimpleDialog(props) {
             })
         });
         responseDog.json().then(async (data) => {
+            console.log(selectedStartDate.toISOString().slice(0, 10));
             await fetch('http://localhost:8000/api/dog-reservations', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    start_date: selectedStartDate.toISOString().slice(0, 10),
-                    end_date: selectedEndDate.toISOString().slice(0, 10),
+                    start_date: modifiedStartDate,
+                    end_date: selectedEndDate.toLocaleDateString("en-US", { year: "numeric", day: "numeric", month: "numeric", timeZone: 'UTC' }),
                     dog: data.id
                 })
             });
